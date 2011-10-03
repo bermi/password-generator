@@ -1,9 +1,24 @@
 {
     "name": "password-generator"
-  , "version": "0.0.1"
+  , "version": "0.0.2"
   , "description": "Memorable password generator"
+  , "repository" :
+      { "type" : "git"
+      , "url" : "https://github.com/bermi/password-generator"
+      }
+  , "bugs" :
+    { "web" : "http://github.com/bermi/password-generator/issues"
+    }
   , "keywords": ["password", "generator", "pass", "random"]
   , "author": "Bermi Ferrer <bermi@bermilabs.com>"
-  , "dependencies": {}
+  , "engines" : { "node" : "0.4 || 0.5" }
+  , "scripts" : { "test" : "make test"
+                }
+  , "devDependencies" : { "expresso" : "" }
   , "main": "index"
+  , "licenses" :
+    [ { "type" : "MIT"
+      , "url" : "https://github.com/bermi/password-generator/raw/master/LICENSE"
+      }
+    ]  
 }
