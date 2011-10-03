@@ -1,0 +1,9 @@
+{
+    "name": "password-generator"
+  , "version": "0.0.1"
+  , "description": "Memorable password generator"
+  , "keywords": ["password", "generator", "pass", "random"]
+  , "author": "Bermi Ferrer <bermi@bermilabs.com>"
+  , "dependencies": {}
+  , "main": "index"
+}
