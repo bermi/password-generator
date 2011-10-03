@@ -27,6 +27,10 @@ Customize the password prefix
     generatePassword(12, false, /\d/, 'foo-') // -> foo-67390298
 
 
+## Running tests
+
+    make test
+
 ## License 
 
 (The MIT License)
