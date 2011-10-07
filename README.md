@@ -17,21 +17,40 @@ Displays this help
     Generates a memorable password
     
     Options:
-      -l  Password length              
+      -l  Password length
       -c  Generates a non memorable password  [default: false]
-      -h  Displays this help           
+      -p  Pattern to match for the generated password
+      -h  Displays this help
 
 Simple memorable pass
 
     password-generator
+    => maqetaxaku
 
 Custom length
 
     password-generator -l 30
+    => nugiferagiraqadamedewubaqirali
 
 Non memorable
 
     password-generator -c
+    => QPnb3gl7_0
+
+Customize the pattern to match for each password character
+
+    password-generator -p "[\d\W\w\p]"
+    => Je;VgG?{Yd
+
+Any number or letter
+
+    password-generator -p "[\w]"
+    => 3NHPqzjIAq
+
+Combine multiple strategies 6 memorable and 3 numbers
+
+    echo "`password-generator -l 6``password-generator -p "[0-9]" -l 3`"
+    => wazawe351
 
 
 ### From node.js
