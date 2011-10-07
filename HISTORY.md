@@ -3,7 +3,7 @@
 
   * Updated package.json
 
-0.0.1 / 2011-04-24
+0.0.1 / 2011-10-04
 ==================
 
   * Initial release
