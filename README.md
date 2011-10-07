@@ -8,6 +8,34 @@ Memorable password generator.
 
 ## Usage
 
+### From the CLI
+
+    password-generator -h
+
+Displays this help
+
+    Generates a memorable password
+    
+    Options:
+      -l  Password length              
+      -c  Generates a non memorable password  [default: false]
+      -h  Displays this help           
+
+Simple memorable pass
+
+    password-generator
+
+Custom length
+
+    password-generator -l 30
+
+Non memorable
+
+    password-generator -c
+
+
+### From node.js
+
     var generatePassword = require('password-generator');
 
 Default settings (memorable 10 letters)
