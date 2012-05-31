@@ -1,31 +1,42 @@
 {
-   "name": "password-generator",
-   "version": "0.1.2",
-   "description": "Memorable password generator",
-   "author": "Bermi Ferrer <bermi@bermilabs.com>",
-   "keywords": ["password", "generator", "pass", "random"],
-   "bugs": {
-       "web": "http://github.com/bermi/password-generator/issues" 
-   },
-   "licenses": [
-       {
-           "type": "MIT",
-           "url": "http://opensource.org/licenses/mit-license.php" 
-       } 
-   ],
-   "repositories": [
-       {
-           "type": "git",
-           "url": "git://github.com/bermi/password-generator.git" 
-       } 
-   ],
-   "main": "index",
-   "bin": "./bin/password-generator",
-   "directories": {
-       "lib": "./lib"
-   },
-   "os": [ "linux", "darwin" ],
-   "dependencies": {},
-   "devDependencies": {"expresso" : "0.9.x"},
-   "engines": { "node": "0.4.x" }
+  "name": "password-generator",
+  "version": "0.1.3",
+  "description": "Memorable password generator",
+  "author": "Bermi Ferrer <bermi@bermilabs.com>",
+  "keywords": [
+      "password",
+      "generator",
+      "pass",
+      "random"
+  ],
+  "bugs": {
+      "web": "http://github.com/bermi/password-generator/issues" 
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/mit-license.php"
+    }
+  ],
+  "repository": {
+        "type": "git",
+        "url": "git://github.com/bermi/password-generator.git"
+  },
+  "engines": {
+    "node": ">= 0.4.x"
+  },
+  "dependencies": {
+    "optimist": "*"
+  },
+  "devDependencies": {
+    "expresso" : ">= 0.9.x"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "main": "index",
+  "bin": "./bin/password-generator",
+  "directories": {
+      "lib": "./lib"
+  }
 }
