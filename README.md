@@ -1,5 +1,7 @@
 # password-generator
 
+[![Build Status](https://secure.travis-ci.org/bermi/password-generator.png?branch=master)](http://travis-ci.org/bermi/password-generator)
+
 Memorable password generator.
 
 ## Installation
@@ -76,13 +78,15 @@ Customize the password prefix
 
 ## Running tests
 
+    npm install
+
     make test
 
 ## License 
 
 (The MIT License)
 
-Copyright (c) 2011 Bermi Ferrer &lt;bermi@bermilabs.com&gt;
+Copyright (c) 2011-2012 Bermi Ferrer &lt;bermi@bermilabs.com&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
