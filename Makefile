@@ -1,3 +1,4 @@
+PATH := $(PATH):./node_modules/.bin
 
 DOCS = $(shell find docs/*.md)
 HTMLDOCS =$(DOCS:.md=.html)
