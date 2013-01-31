@@ -2,7 +2,7 @@
 
 [![Build Status](https://secure.travis-ci.org/bermi/password-generator.png?branch=master)](http://travis-ci.org/bermi/password-generator)
 
-Memorable password generator.
+Memorable password generator. For the command line, Node.js and browsers.
 
 ## Installation
 
@@ -17,7 +17,7 @@ Memorable password generator.
 Displays this help
 
     Generates a memorable password
-    
+
     Options:
       -l  Password length
       -c  Generates a non memorable password  [default: false]
@@ -55,23 +55,29 @@ Combine multiple strategies 6 memorable and 3 numbers
     => wazawe351
 
 
-### From node.js
+### From Node.js
 
     var generatePassword = require('password-generator');
 
-Default settings (memorable 10 letters)
+### From the browser
+
+  <script src="https://raw.github.com/bermi/password-generator/master/dist/password-generator.min.js" type="text/javascript"></script>
+
+#### Usage
+
+##### Default settings (memorable 10 letters)
 
     generatePassword() // -> xexeyimahi
 
-Custom length not memorable
+##### Custom length not memorable
 
     generatePassword(12, false) // -> 76PAGEaq6i5c
 
-Characters should match a pattern
+##### Characters should match a pattern
 
     generatePassword(12, false, /\d/) // -> 252667390298
 
-Customize the password prefix
+##### Customize the password prefix
 
     generatePassword(12, false, /\d/, 'foo-') // -> foo-67390298
 
@@ -79,10 +85,14 @@ Customize the password prefix
 ## Running tests
 
     npm install
-
     make test
 
-## License 
+## Building
+
+    npm install
+    make all
+
+## License
 
 (The MIT License)
 

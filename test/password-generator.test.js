@@ -1,30 +1,36 @@
+(function (root) {
 
-/**
- * Module dependencies.
- */
+  var expect = root.expect || require('expect.js'),
+    generatePassword;
 
-var assert = require('assert'),
+  // This test is meant to run in both, the browser and the CLI
+  if (typeof window === 'undefined') {
     generatePassword = require('../');
+  } else {
+    generatePassword = root.generatePassword;
+  }
 
-module.exports = {
-    'should generate a 10 chararacter memorable password': function(){
-        assert.ok(generatePassword().match(/([bcdfghjklmnpqrstvwxyz][aeiou]){5}/));
-    },
-    'should generate a 6 chararacter memorable password': function(){
-        assert.ok(generatePassword().match(/([bcdfghjklmnpqrstvwxyz][aeiou]){3}/));
-    },
-    'should generate a 1000 chararacter non memorable password': function(){
-        var pass = generatePassword(1000, false);
-        assert.ok(pass.match(/[bcdfghjklmnpqrstvwxyz]{4}/ig));
-        assert.ok(pass.length === 1000);
-    },
-    'should generate passwords matching regex pattern': function(){
-        var pass = generatePassword(5, false, /\d/);
-        assert.ok(pass.match(/^\d{5}$/));
-    },
-    'should generate passwords with a given preffix': function(){
-        var pass = generatePassword(7, false, /\d/, 'foo-');
-        assert.ok(pass.match(/^foo\-\d{3}$/));
-    }
-};
 
+  describe("When using the password generator, it:", function () {
+    it('should generate a 10 chararacter memorable password', function () {
+      expect(generatePassword()).to.match(/([bcdfghjklmnpqrstvwxyz][aeiou]){5}/);
+    });
+    it('should generate a 6 chararacter memorable password', function () {
+      expect(generatePassword()).to.match(/([bcdfghjklmnpqrstvwxyz][aeiou]){3}/);
+    });
+    it('should generate a 1000 chararacter non memorable password', function () {
+      var pass = generatePassword(1000, false);
+      expect(pass).to.match(/[bcdfghjklmnpqrstvwxyz]{4}/ig);
+      expect(pass.length).to.be(1000);
+    });
+    it('should generate passwords matching regex pattern', function () {
+      var pass = generatePassword(5, false, /\d/);
+      expect(pass).to.match(/^\d{5}$/);
+    });
+    it('should generate passwords with a given preffix', function () {
+      var pass = generatePassword(7, false, /\d/, 'foo-');
+      expect(pass).to.match(/^foo\-\d{3}$/);
+    });
+  });
+
+}(this));
