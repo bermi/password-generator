@@ -1,7 +1,5 @@
 # password-generator
 
-[![Build Status](https://secure.travis-ci.org/bermi/password-generator.png?branch=master)](http://travis-ci.org/bermi/password-generator)
-
 Memorable password generator. For the command line, Node.js and browsers.
 
 ## Installation
