@@ -1,8 +1,10 @@
 # password-generator
 
+Memorable password generator. For the command line, Node.js and browsers.
+
 [![Build Status](https://secure.travis-ci.org/bermi/password-generator.png?branch=master)](http://travis-ci.org/bermi/password-generator)
 
-Memorable password generator. For the command line, Node.js and browsers.
+[![browser support](http://ci.testling.com/bermi/password-generator.png)](http://ci.testling.com/bermi/password-generator)
 
 ## Installation
 
@@ -61,7 +63,7 @@ Combine multiple strategies 6 memorable and 3 numbers
 
 ### From the browser
 
-  <script src="https://raw.github.com/bermi/password-generator/master/dist/password-generator.min.js" type="text/javascript"></script>
+    <script src="https://raw.github.com/bermi/password-generator/master/dist/password-generator.min.js" type="text/javascript"></script>
 
 #### Usage
 

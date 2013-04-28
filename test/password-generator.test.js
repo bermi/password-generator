@@ -4,7 +4,7 @@
     generatePassword;
 
   // This test is meant to run in both, the browser and the CLI
-  if (typeof window === 'undefined') {
+  if (typeof require !== 'undefined') {
     generatePassword = require('../');
   } else {
     generatePassword = root.generatePassword;

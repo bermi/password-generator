@@ -1,6 +1,6 @@
 {
   "name": "password-generator",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Memorable password generator. For the command line, Node.js and the browser.",
   "author": "Bermi Ferrer <bermi@bermilabs.com>",
   "keywords": [
@@ -31,12 +31,26 @@
     "optimist": "*"
   },
   "devDependencies": {
-    "mocha": "*",
-    "grunt": "*",
-    "expect.js": "*"
+    "mocha": "~1.9.0",
+    "expect.js": "~0.2.0",
+    "grunt": "~0.3.x"
   },
   "scripts": {
     "test": "make test"
+  },
+  "testling": {
+    "browsers": [
+      "iexplore/6..latest",
+      "firefox/10..latest",
+      "chrome/20..latest",
+      "opera/12..latest",
+      "safari/5..latest",
+      "iphone/6..latest",
+      "ipad/6..latest",
+      "android-browser/4..latest"
+    ],
+    "harness": "mocha",
+    "files": "test/*.js"
   },
   "main": "index",
   "bin": "./bin/password-generator",
