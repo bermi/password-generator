@@ -31,6 +31,11 @@
       var pass = generatePassword(7, false, /\d/, 'foo-');
       expect(pass).to.match(/^foo\-\d{3}$/);
     });
+    it('should generate long passwords without throwing exceeding the ' +
+    'call stack limits' , function () {
+      var pass = generatePassword(1200, false, /\d/);
+      expect(pass).to.match(/^\d{1200}$/);
+    });
   });
 
 }(this));
