@@ -24,9 +24,6 @@
     "type": "git",
     "url": "git://github.com/bermi/password-generator.git"
   },
-  "engines": {
-    "node": ">= 0.6.x"
-  },
   "dependencies": {
     "optimist": "*"
   },
