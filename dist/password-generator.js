@@ -1,6 +1,6 @@
 /*
  * password-generator
- * Copyright(c) 2011-2013 Bermi Ferrer <bermi@bermilabs.com>
+ * Copyright(c) 2011-2015 Bermi Ferrer <bermi@bermilabs.com>
  * MIT Licensed
  */
 (function (root) {
@@ -19,7 +19,7 @@
   localName = root.localPasswordGeneratorLibraryName || "generatePassword",
 
   password = function (length, memorable, pattern, prefix) {
-    var char, n;
+    var char = "", n, i, validChars = [];
     if (length == null) {
       length = 10;
     }
@@ -32,27 +32,52 @@
     if (prefix == null) {
       prefix = '';
     }
-    if (prefix.length >= length) {
-      return prefix;
-    }
-    if (memorable) {
-      if (prefix.match(consonant)) {
-        pattern = vowel;
-      } else {
-        pattern = consonant;
+
+    // Non memorable passwords will pick characters from a pre-generated
+    // list of characters
+    if (!memorable) {
+      for (i = 33; 126 > i; i += 1) {
+        char = String.fromCharCode(i);
+        if (char.match(pattern)) {
+          validChars.push(char);
+        }
+      }
+
+      if (!validChars.length) {
+        throw new Error("Could not find characters that match the " +
+          "password pattern " + pattern + ". Patterns must match individual " +
+          "characters, not the password as a whole.");
       }
     }
-    n = (Math.floor(Math.random() * 100) % 94) + 33;
-    char = String.fromCharCode(n);
-    if (memorable) {
-      char = char.toLowerCase();
+
+
+    while (prefix.length < length) {
+      if (memorable) {
+        if (prefix.match(consonant)) {
+          pattern = vowel;
+        } else {
+          pattern = consonant;
+        }
+        n = rand(33, 126);
+        char = String.fromCharCode(n);
+      } else {
+        char = validChars[rand(0, validChars.length)];
+      }
+
+      if (memorable) {
+        char = char.toLowerCase();
+      }
+      if (char.match(pattern)) {
+        prefix = "" + prefix + char;
+      }
     }
-    if (!char.match(pattern)) {
-      return password(length, memorable, pattern, prefix);
-    }
-    return password(length, memorable, pattern, "" + prefix + char);
+    return prefix;
   };
 
+
+  function rand(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+  }
 
   ((typeof exports !== 'undefined') ? exports : root)[localName] = password;
   if (typeof exports !== 'undefined') {

@@ -47,7 +47,7 @@ module.exports = function (grunt) {
       banner: "/*! <%= pkg.name %> - v<%= pkg.version %> " +
       '(<%= grunt.template.today("yyyy-mm-dd") %>)' +
       "\n* -----------------\n" +
-      "* Copyright(c) 2013 Bermi Ferrer <bermi@bermilabs.com>\n" +
+      "* Copyright(c) 2011-2015 Bermi Ferrer <bermi@bermilabs.com>\n" +
       "* MIT Licensed\n*/"
     },
     concat: {
