@@ -63,7 +63,7 @@ Combine multiple strategies 6 memorable and 3 numbers
 
 ### From the browser
 
-    <script src="https://raw.github.com/bermi/password-generator/master/dist/password-generator.min.js" type="text/javascript"></script>
+    <script src="https://cdn.rawgit.com/bermi/password-generator/master/dist/password-generator.min.js" type="text/javascript"></script>
 
 #### Usage
 
