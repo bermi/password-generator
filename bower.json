@@ -1,7 +1,7 @@
 {
   "name": "password-generator",
   "description": "Memorable password generator. For the command line, Node.js and browsers.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "lib/password-generator.js",
   "license": "MIT",
   "keywords": [
