@@ -83,6 +83,60 @@ Combine multiple strategies 6 memorable and 3 numbers
 
     generatePassword(12, false, /\d/, 'foo-') // -> foo-67390298
 
+##### Example with custom validation rules
+
+Given the pattern regexp can only match a single character
+you can build a function that generates multiple passwords until you
+hit one that complies with your rules.
+
+The following example will generate a password with the following requirements
+
+1) Must contain at least two numbers
+2) Must contain at least three uppercase letters
+3) Must contain at least three lowercase letters
+4) Must contain at least two special characters
+5) Must NOT contain sequences of two or more repeated characters
+
+
+    var generatePassword = require("password-validator");
+
+    var maxLength = 18;
+    var minLength = 12;
+    var uppercaseMinCount = 3;
+    var lowercaseMinCount = 3;
+    var numberMinCount = 2;
+    var specialMinCount = 2;
+    var UPPERCASE_RE = /([A-Z])/g;
+    var LOWERCASE_RE = /([a-z])/g;
+    var NUMBER_RE = /([\d])/g;
+    var SPECIAL_CHAR_RE = /([\?\-])/g;
+    var NON_REPEATING_CHAR_RE = /([\w\d\?\-])\1{2,}/g;
+
+    function isStrongEnough(password) {
+      var uc = password.match(UPPERCASE_RE);
+      var lc = password.match(LOWERCASE_RE);
+      var n = password.match(NUMBER_RE);
+      var sc = password.match(SPECIAL_CHAR_RE);
+      var nr = password.match(NON_REPEATING_CHAR_RE);
+      return password.length >= minLength &&
+        !nr &&
+        uc && uc.length >= uppercaseMinCount &&
+        lc && lc.length >= lowercaseMinCount &&
+        n && n.length >= numberMinCount &&
+        sc && sc.length >= specialMinCount;
+    }
+
+    function customPassword() {
+      var password = "";
+      var randomLength = Math.floor(Math.random() * (maxLength - minLength)) + minLength;
+      while (!isStrongEnough(password)) {
+        password = generatePassword(randomLength, false, /[\w\d\?\-]/);
+      }
+      return password;
+    }
+
+    console.log(customPassword()); // => 2hP5v?1KKNx7_a-W
+
 
 ## Running tests
 
