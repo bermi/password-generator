@@ -91,11 +91,11 @@ hit one that complies with your rules.
 
 The following example will generate a password with the following requirements
 
-1) Must contain at least two numbers
-2) Must contain at least three uppercase letters
-3) Must contain at least three lowercase letters
-4) Must contain at least two special characters
-5) Must NOT contain sequences of two or more repeated characters
+* Must contain at least two numbers
+* Must contain at least three uppercase letters
+* Must contain at least three lowercase letters
+* Must contain at least two special characters
+* Must NOT contain sequences of two or more repeated characters
 
 
     var generatePassword = require("password-validator");
