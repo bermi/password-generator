@@ -12,7 +12,6 @@
 
 
   describe("When using the password generator, it:", function () {
-    this.timeout(40);
 
     it('should generate a 10 chararacter memorable password', function () {
       expect(generatePassword()).to.match(/([bcdfghjklmnpqrstvwxyz][aeiou]){5}/);
