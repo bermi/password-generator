@@ -99,7 +99,7 @@ The following example will generate a password with the following requirements
 
 
 ```javascript
-var generatePassword = require("password-validator");
+var generatePassword = require("password-generator");
 
 var maxLength = 18;
 var minLength = 12;
