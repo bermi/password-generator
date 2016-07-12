@@ -8,7 +8,7 @@ Memorable password generator. For the command line, Node.js and browsers.
 
 ## Installation
 
-    $ npm install password-generator
+    $ npm install password-generator -g
 
 ## Usage
 
