@@ -158,7 +158,7 @@ console.log(customPassword()); // => 2hP5v?1KKNx7_a-W
 
 (The MIT License)
 
-Copyright (c) 2011-2012 Bermi Ferrer &lt;bermi@bermilabs.com&gt;
+Copyright (c) 2011-2016 Bermi Ferrer &lt;bermi@bermilabs.com&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
