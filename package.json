@@ -36,19 +36,6 @@
   "scripts": {
     "test": "make test"
   },
-  "testling": {
-    "browsers": [
-      "iexplore/9..latest",
-      "firefox/38..latest",
-      "chrome/40..latest",
-      "opera/30..latest",
-      "safari/7..latest",
-      "iphone/7..latest",
-      "ipad/7..latest"
-    ],
-    "harness": "mocha",
-    "files": "test/*.js"
-  },
   "main": "index",
   "bin": "./bin/password-generator",
   "directories": {
