@@ -36,6 +36,7 @@
   "scripts": {
     "test": "make test"
   },
+  "typings": "index.d.ts",
   "main": "index",
   "bin": "./bin/password-generator",
   "directories": {
