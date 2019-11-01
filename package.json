@@ -38,7 +38,8 @@
     "mocha": "6.2.2"
   },
   "scripts": {
-    "test": "make test"
+    "test": "make test",
+    "precommit": "grunt build && git add dist/*"
   },
   "typings": "index.d.ts",
   "main": "index",
