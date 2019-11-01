@@ -1,6 +1,6 @@
 {
   "name": "password-generator",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "Memorable password generator. For the command line, Node.js and the browser.",
   "author": "Bermi Ferrer <bermi@bermilabs.com>",
   "keywords": [
