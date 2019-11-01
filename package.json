@@ -26,12 +26,12 @@
     "url": "git://github.com/bermi/password-generator.git"
   },
   "dependencies": {
-    "yargs-parser": "^8.0.0"
+    "yargs-parser": "^16.0.0"
   },
   "devDependencies": {
-    "expect.js": "0.2.0",
-    "grunt": "0.3.17",
-    "mocha": "2.2.5"
+    "expect.js": "0.3.1",
+    "grunt": "1.0.4",
+    "mocha": "6.2.2"
   },
   "scripts": {
     "test": "make test"
