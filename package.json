@@ -39,7 +39,7 @@
   },
   "scripts": {
     "test": "make test",
-    "precommit": "grunt build && git add dist/*"
+    "beforeBump": "grunt build && git add dist/*"
   },
   "typings": "index.d.ts",
   "main": "index",

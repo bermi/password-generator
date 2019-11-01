@@ -68,6 +68,11 @@
       expect(pass).to.match(/a/);
     });
 
+    it('should allow ~ character', function () {
+      var pass = generatePassword(2, false, /[~]/);
+      expect(pass.length).to.be(2);
+      expect(pass).to.be('~~');
+    });
   });
 
 }(this));
