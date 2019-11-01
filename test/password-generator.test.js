@@ -61,6 +61,13 @@
       }).to.throwException(/Could not find characters that match the password pattern/);
     });
 
+    it('should include the lower ASCII characters issue #25', function () {
+      var pass = generatePassword(100, false, /[Aa]/);
+      expect(pass.length).to.be(100);
+      expect(pass).to.match(/A/);
+      expect(pass).to.match(/a/);
+    });
+
   });
 
 }(this));
