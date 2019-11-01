@@ -1,14 +1,14 @@
 /*
  * password-generator
- * Copyright(c) 2011-2015 Bermi Ferrer <bermi@bermilabs.com>
+ * Copyright(c) 2011-2019 Bermi Ferrer <bermi@bermilabs.com>
  * MIT Licensed
  */
 (function (root) {
 
-  var localName, consonant, letter, password, vowel;
-  letter = /[a-zA-Z]$/;
-  vowel = /[aeiouAEIOU]$/;
-  consonant = /[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]$/;
+  var localName, consonant, letter, password, vowel, rand, getRandomValues;
+  letter = /[a-z]$/i;
+  vowel = /[aeiou]$/i;
+  consonant = /[bcdfghjklmnpqrstvwxyz]$/i;
 
 
   // Defines the name of the local variable the passwordGenerator library will use
@@ -16,7 +16,7 @@
   // by your application and you want a different name. For example:
   //    // Declare before including the passwordGenerator library
   //    var localPasswordGeneratorLibraryName = 'pass';
-  localName = root.localPasswordGeneratorLibraryName || "generatePassword",
+  localName = root.localPasswordGeneratorLibraryName || "generatePassword";
 
   password = function (length, memorable, pattern, prefix) {
     var char = "", n, i, validChars = [];
@@ -75,22 +75,22 @@
   };
 
 
-  function rand(min, max) {
+  rand = function (min, max) {
     var key, value, arr = new Uint8Array(max);
     getRandomValues(arr);
     for (key in arr) {
       if (arr.hasOwnProperty(key)) {
         value = arr[key];
-        if (value > min && value < max) {
+        if (value >= min && value < max) {
           return value;
         }
       }
     }
     return rand(min, max);
-  }
+  };
 
 
-  function getRandomValues(buf) {
+  getRandomValues = function (buf) {
     if (root.crypto && root.crypto.getRandomValues) {
       root.crypto.getRandomValues(buf);
     } else if (typeof root.msCrypto === "object" && typeof root.msCrypto.getRandomValues === 'function') {
@@ -101,7 +101,7 @@
     } else {
       throw new Error("No secure random number generator available.");
     }
-  }
+  };
 
 
   ((typeof exports !== 'undefined') ? exports : root)[localName] = password;
