@@ -1,6 +1,6 @@
 /*
  * password-generator
- * Copyright(c) 2011-2019 Bermi Ferrer <bermi@bermilabs.com>
+ * Copyright(c) 2011-2020 Bermi Ferrer <bermi@bermilabs.com>
  * MIT Licensed
  */
 (function (root) {
