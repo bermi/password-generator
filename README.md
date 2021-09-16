@@ -116,7 +116,7 @@ var UPPERCASE_RE = /([A-Z])/g;
 var LOWERCASE_RE = /([a-z])/g;
 var NUMBER_RE = /([\d])/g;
 var SPECIAL_CHAR_RE = /([\?\-])/g;
-var NON_REPEATING_CHAR_RE = /([\w\d\?\-])\1{2,}/g;
+var NON_REPEATING_CHAR_RE = /([\W\w\d\?\-])\1{2,}/g;
 
 function isStrongEnough(password) {
   var uc = password.match(UPPERCASE_RE);
@@ -141,7 +141,7 @@ function customPassword() {
   return password;
 }
 
-console.log(customPassword()); // => 2hP5v?1KKNx7_a-W
+console.log(customPassword()); // => 2hP5v?1KJNx7_a-W
 ```
 
 
