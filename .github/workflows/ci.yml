@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: "1.3.1"
+      - name: Install dependencies
+        run: bun install --no-progress --registry https://registry.npmjs.org/
+      - name: Unit tests (Bun)
+        run: bun test --coverage
+      - name: Type tests (tsc)
+        run: bun run typecheck:tests
+      - name: Install Playwright browsers
+        run: bunx playwright install --with-deps chromium
+      - name: Browser tests (Playwright)
+        run: bun run test:browser

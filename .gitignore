@@ -2,4 +2,8 @@
 node_modules
 npm-debug.log
 lib-cov
-test/coverage.html
+coverage
+playwright-report
+tmp/
+bun.lockb
+dist/

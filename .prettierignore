@@ -1,0 +1,13 @@
+# build/artifacts
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+
+# locks
+bun.lock
+bun.lockb
+
+# misc
+.DS_Store

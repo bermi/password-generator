@@ -1,8 +1,10 @@
 {
   "name": "password-generator",
-  "version": "2.3.2",
-  "description": "Memorable password generator. For the command line, Node.js and the browser.",
+  "version": "3.0.0",
+  "description": "Memorable password generator for Node and browsers (async WebCrypto).",
   "author": "Bermi Ferrer <bermi@bermilabs.com>",
+  "license": "MIT",
+  "type": "module",
   "keywords": [
     "password",
     "generator",
@@ -10,50 +12,72 @@
     "random",
     "browser",
     "crypto",
-    "security"
+    "security",
+    "webcrypto",
+    "esm"
   ],
   "bugs": {
     "web": "http://github.com/bermi/password-generator/issues"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://opensource.org/licenses/mit-license.php"
-    }
-  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/bermi/password-generator.git"
   },
-  "dependencies": {},
-  "devDependencies": {
-    "expect.js": "^0.3.1",
-    "grunt": "^1.4.1",
-    "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-jshint": "^3.0.0",
-    "grunt-contrib-uglify": "^5.0.1",
-    "grunt-contrib-watch": "^1.1.0",
-    "mocha": "9.1.1"
+  "engines": {
+    "node": ">=20"
   },
-  "scripts": {
-    "test": "make test",
-    "precommit": "grunt build && git add dist/*"
-  },
-  "release-it": {
-    "hooks": {
-      "before:bump": "npm run precommit"
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "browser": "./dist/index.js",
+      "bun": "./dist/index.js",
+      "node": "./dist/index.js",
+      "default": "./dist/index.js"
     }
   },
+  "bin": "./bin/password-generator.js",
   "files": [
-    "/lib",
-    "/index.js",
-    "/index.d.ts",
-    "/bin/password-generator"
+    "dist",
+    "bin",
+    "BENCHMARKS.md",
+    "CHANGELOG.md",
+    "README.md",
+    "LICENSE"
   ],
-  "typings": "index.d.ts",
-  "main": "index",
-  "bin": "./bin/password-generator",
-  "directories": {
-    "lib": "./lib"
+  "scripts": {
+    "check": "bun x tsc -p tsconfig.json --noEmit",
+    "build": "bun build src/index.ts --outdir dist --entry-naming \"[name].js\" --format esm --target=browser --sourcemap=linked",
+    "build:cli": "bun build src/cli.ts --outdir dist --entry-naming \"[name].js\" --format esm --target=node --sourcemap=linked",
+    "build:types": "bun x tsc -p tsconfig.types.json",
+    "build:all": "bun run build && bun run build:cli && bun run build:types",
+    "bench": "bun run build && bun run bench/bench.mjs",
+    "bench:constraints": "bun run bench/constraints.mjs",
+    "bench:patterns": "bun run bench/patterns.mjs",
+    "bench:structures": "bun run bench/structures.mjs",
+    "bench:node": "bun run build && node bench/bench.mjs",
+    "bench:node:constraints": "node bench/constraints.mjs",
+    "bench:node:patterns": "node bench/patterns.mjs",
+    "bench:node:structures": "node bench/structures.mjs",
+    "bench:browser": "bun run build && bunx playwright test -c bench/playwright.config.mjs",
+    "bench:all": "bun run bench && bun run bench:constraints && bun run bench:patterns && bun run bench:structures && bun run bench:node && bun run bench:node:constraints && bun run bench:node:patterns && bun run bench:node:structures && bun run bench:browser",
+    "format": "bunx prettier --write .",
+    "format:check": "bunx prettier --check .",
+    "typecheck:tests": "bun x tsc -p tests/tsconfig.types.json",
+    "test": "bun test",
+    "test:browser": "bun run build && bunx playwright test",
+    "test:all": "bun test --coverage && bun run typecheck:tests && bun run build && bunx playwright test",
+    "test:watch": "bun test --watch",
+    "ci:local": "act -W .github/workflows/ci.yml --container-architecture linux/arm64 && act -W .github/workflows/browser.yml --container-architecture linux/arm64",
+    "clean": "rm -rf dist coverage tmp playwright-report test-results",
+    "prepublishOnly": "bun run build:all",
+    "publish": "npm publish"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@playwright/test": "^1.42.0",
+    "typescript": "^5.0.0"
   }
 }

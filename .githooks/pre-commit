@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+mapfile -t files < <(git diff --cached --name-only --diff-filter=ACM)
+
+if [ ${#files[@]} -eq 0 ]; then
+  exit 0
+fi
+
+format_files=()
+for file in "${files[@]}"; do
+  case "$file" in
+    *.js|*.jsx|*.ts|*.tsx|*.mjs|*.cjs|*.json|*.jsonc|*.md|*.css|*.html|*.graphql|*.gql|*.yml|*.yaml)
+      format_files+=("$file")
+      ;;
+  esac
+done
+
+if [ ${#format_files[@]} -eq 0 ]; then
+  exit 0
+fi
+
+bunx prettier --write --ignore-unknown -- "${format_files[@]}"
+
+git add -- "${format_files[@]}"
