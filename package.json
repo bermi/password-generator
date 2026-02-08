@@ -72,7 +72,8 @@
     "test:watch": "bun test --watch",
     "ci:local": "act -W .github/workflows/ci.yml --container-architecture linux/arm64 && act -W .github/workflows/browser.yml --container-architecture linux/arm64",
     "clean": "rm -rf dist coverage tmp playwright-report test-results",
-    "publish": "bun run build:all && npm publish"
+    "prepublishOnly": "bun run build:all",
+    "publish": "npm publish"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
