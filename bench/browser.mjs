@@ -1,6 +1,4 @@
 import { runPasswordBench, formatPasswordBench } from "./bench.mjs";
-import { runPatternBench, formatPatternBench } from "./patterns.mjs";
-import { runStructuresBench, formatStructuresBench } from "./structures.mjs";
 import { runConstraintsBench, formatConstraintsBench } from "./constraints.mjs";
 
 const params = new URLSearchParams(globalThis.location?.search ?? "");
@@ -9,10 +7,6 @@ const log = !params.has("quiet");
 
 const passwordOverrides = fast
   ? { warmup: 1, samples: 2, iters: 800, length: 12 }
-  : {};
-const patternOverrides = fast ? { warmup: 1, samples: 2, iters: 400 } : {};
-const structureOverrides = fast
-  ? { warmup: 1, samples: 2, iters: 5_000, length: 16 }
   : {};
 const constraintsOverrides = fast
   ? {
@@ -29,20 +23,14 @@ const constraintsOverrides = fast
 
 try {
   const password = await runPasswordBench(passwordOverrides);
-  const patterns = runPatternBench(patternOverrides);
-  const structures = runStructuresBench(structureOverrides);
   const constraints = await runConstraintsBench(constraintsOverrides);
 
-  const results = { password, patterns, structures, constraints };
+  const results = { password, constraints };
   globalThis.__benchResults = results;
 
   if (log) {
     const output = [
       ...formatPasswordBench(password),
-      "",
-      ...formatPatternBench(patterns),
-      "",
-      ...formatStructuresBench(structures),
       "",
       ...formatConstraintsBench(constraints),
     ];

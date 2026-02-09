@@ -4,12 +4,8 @@
 
 - bun run bench
 - bun run bench:constraints
-- bun run bench:patterns
-- bun run bench:structures
 - bun run bench:node
 - bun run bench:node:constraints
-- bun run bench:node:patterns
-- bun run bench:node:structures
 - bun run bench:browser
 - bun run bench:all
 
