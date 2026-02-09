@@ -1,169 +1,91 @@
-type ArgValue = string | boolean | string[] | undefined;
-
-type ParsedArgs = {
-  _: string[];
-  [key: string]: ArgValue;
-};
-
-const parseArgs = (args: string[]): ParsedArgs => {
-  const parsed: ParsedArgs = { _: [] };
-  const set = (key: string, value: ArgValue = true) => {
-    parsed[key] = value;
-  };
-
-  for (let i = 0; i < args.length; i += 1) {
-    const arg = args[i];
-    if (arg === undefined) {
-      continue;
-    }
-    if (arg === "--") {
-      parsed._.push(...args.slice(i + 1));
-      break;
-    }
-    if (arg.startsWith("--")) {
-      const [rawKey, rawValue] = arg.slice(2).split("=");
-      if (!rawKey) {
-        continue;
-      }
-      if (rawValue !== undefined) {
-        set(rawKey, rawValue);
-        continue;
-      }
-      const next = args[i + 1];
-      if (next && !next.startsWith("-")) {
-        set(rawKey, next);
-        i += 1;
-      } else {
-        set(rawKey, true);
-      }
-      continue;
-    }
-    if (arg.startsWith("-")) {
-      const [rawKey, rawValue] = arg.slice(1).split("=");
-      if (!rawKey) {
-        continue;
-      }
-      if (rawValue !== undefined) {
-        set(rawKey, rawValue);
-        continue;
-      }
-      const next = args[i + 1];
-      if (next && !next.startsWith("-")) {
-        set(rawKey, next);
-        i += 1;
-      } else {
-        set(rawKey, true);
-      }
-      continue;
-    }
-    parsed._.push(arg);
-  }
-
-  return parsed;
-};
-
-const pickValue = (args: ParsedArgs, keys: string[]): ArgValue => {
-  for (const key of keys) {
-    if (args[key] !== undefined) {
-      return args[key];
-    }
-  }
-  return undefined;
-};
-
-const asBoolean = (value: ArgValue): boolean => {
-  if (value === undefined) return false;
-  if (value === true) return true;
-  if (Array.isArray(value)) return value.length > 0;
-  if (typeof value === "string") {
-    const normalized = value.toLowerCase();
-    return normalized !== "false" && normalized !== "0";
-  }
-  return Boolean(value);
-};
-
-const asString = (value: ArgValue): string | undefined => {
-  if (value === undefined) return undefined;
-  if (Array.isArray(value)) return value[0];
-  return typeof value === "string" ? value : String(value);
-};
-
-const puts = console.log;
+import { parseArgs } from "node:util";
 
 const DEFAULT_LENGTH = 16;
 const DEFAULT_MEMORABLE_LENGTH = 20;
 const DEFAULT_WORDS = 3;
 
-const options = [
-  {
-    flags: "-l, --length <n>",
-    description: `Password length [default: ${DEFAULT_LENGTH}, or ${DEFAULT_MEMORABLE_LENGTH} with --memorable]`,
-  },
-  { flags: "-m, --memorable", description: "Generates a memorable password" },
-  {
-    flags: "-c, --non-memorable",
-    description: "Generates a non memorable password [default]",
-  },
-  {
-    flags: "-p, --pattern <regex>",
-    description: "Pattern to match for the generated password",
-  },
-  {
-    flags: "-i, --ignore-security-recommendations",
-    description: "Ignore security recommendations",
-  },
-  {
-    flags: "-s, -sN, --words <n>",
-    description:
-      "Generate N memorable words (3-7 letters) separated by spaces [default: 3]",
-  },
-  { flags: "-h, --help", description: "Displays this help" },
-];
-
 const showHelp = () => {
-  puts("Generates a secure password\r\n");
-  puts("Options:");
-  for (const option of options) {
-    puts(`  ${option.flags}: ${option.description}`);
+  console.log("Generates a secure password\r\n");
+  console.log("Options:");
+  console.log(
+    `  -l, --length <n>: Password length [default: ${DEFAULT_LENGTH}, or ${DEFAULT_MEMORABLE_LENGTH} with --memorable]`,
+  );
+  console.log("  -m, --memorable: Generates a memorable password");
+  console.log(
+    "  -c, --non-memorable: Generates a non memorable password [default]",
+  );
+  console.log(
+    "  -p, --pattern <regex>: Pattern to match for the generated password",
+  );
+  console.log(
+    "  -i, --ignore-security-recommendations: Ignore security recommendations",
+  );
+  console.log(
+    `  -s, -sN, --words <n>: Generate N memorable words (3-7 letters) separated by spaces [default: ${DEFAULT_WORDS}]`,
+  );
+  console.log("  -h, --help: Displays this help");
+};
+
+// Expand -s and -sN into --words <n> before parseArgs
+const expandWordsArg = (argv: string[]): string[] => {
+  const result: string[] = [];
+  for (let i = 0; i < argv.length; i += 1) {
+    const arg = argv[i]!;
+    const match = arg.match(/^-s(\d+)$/);
+    if (match) {
+      result.push("--words", match[1]!);
+    } else if (arg === "-s") {
+      const next = argv[i + 1];
+      if (next !== undefined && /^\d+$/.test(next)) {
+        result.push("--words", next);
+        i += 1;
+      } else {
+        result.push("--words", String(DEFAULT_WORDS));
+      }
+    } else {
+      result.push(arg);
+    }
   }
+  return result;
 };
 
 export const runCli = async (argv = process.argv.slice(2)) => {
-  const parsed = parseArgs(argv);
-  const help = asBoolean(pickValue(parsed, ["h", "help"]));
-  if (help) {
+  const { values } = parseArgs({
+    args: expandWordsArg(argv),
+    options: {
+      length: { type: "string", short: "l" },
+      memorable: { type: "boolean", short: "m" },
+      "non-memorable": { type: "boolean", short: "c" },
+      pattern: { type: "string", short: "p" },
+      "ignore-security-recommendations": { type: "boolean", short: "i" },
+      words: { type: "string" },
+      help: { type: "boolean", short: "h" },
+    },
+    strict: false,
+    allowPositionals: true,
+  });
+
+  if (values.help) {
     showHelp();
     return;
   }
 
   const { generatePasswordWithOptions } = await import("./index.js");
-  const patternRaw = asString(pickValue(parsed, ["p", "pattern"]));
-  const suffixedWordsKey = Object.keys(parsed).find((key) =>
-    /^s\d+$/.test(key),
-  );
-  const wordsRaw = pickValue(parsed, ["s", "words", "phrase", "passphrase"]);
-  let words: number | undefined;
-  if (suffixedWordsKey) {
-    words = Number(suffixedWordsKey.slice(1));
-  } else if (wordsRaw !== undefined) {
-    words = wordsRaw === true ? DEFAULT_WORDS : Number(wordsRaw);
-  }
 
-  const hasMemorable = pickValue(parsed, ["m", "memorable"]) !== undefined;
-  const hasNonMemorable =
-    pickValue(parsed, ["c", "non-memorable", "nonmemorable"]) !== undefined;
-  let memorable = hasMemorable ? true : false;
-  if (hasNonMemorable) {
-    memorable = false;
-  }
+  let memorable = values.memorable === true;
+  if (values["non-memorable"]) memorable = false;
 
-  const pattern = patternRaw ? new RegExp(patternRaw) : undefined;
-  if (pattern) {
-    memorable = false;
-  }
+  const patternRaw = values.pattern;
+  const pattern =
+    typeof patternRaw === "string" ? new RegExp(patternRaw) : undefined;
+  if (pattern) memorable = false;
 
-  const lengthRaw = asString(pickValue(parsed, ["l", "length"]));
-  const lengthValue = lengthRaw !== undefined ? Number(lengthRaw) : undefined;
+  const words =
+    values.words !== undefined ? Number(values.words) : undefined;
+
+  const lengthRaw = values.length;
+  const lengthValue =
+    typeof lengthRaw === "string" ? Number(lengthRaw) : undefined;
   const length =
     lengthValue !== undefined
       ? lengthValue
@@ -172,13 +94,9 @@ export const runCli = async (argv = process.argv.slice(2)) => {
         : memorable
           ? DEFAULT_MEMORABLE_LENGTH
           : DEFAULT_LENGTH;
-  const ignoreSecurityRecommendations = asBoolean(
-    pickValue(parsed, [
-      "i",
-      "ignore-security-recommendations",
-      "ignoreSecurityRecommendations",
-    ]),
-  );
+
+  const ignoreSecurityRecommendations =
+    values["ignore-security-recommendations"] === true;
 
   const options: {
     length?: number;
@@ -191,17 +109,10 @@ export const runCli = async (argv = process.argv.slice(2)) => {
     ignoreSecurityRecommendations,
   };
 
-  if (pattern) {
-    options.pattern = pattern;
-  }
-  if (typeof length === "number" && Number.isFinite(length)) {
+  if (pattern) options.pattern = pattern;
+  if (typeof length === "number" && Number.isFinite(length))
     options.length = length;
-  }
-  if (words !== undefined) {
-    options.words = words;
-  }
+  if (words !== undefined) options.words = words;
 
-  const pass = await generatePasswordWithOptions(options);
-
-  puts(pass);
+  console.log(await generatePasswordWithOptions(options));
 };

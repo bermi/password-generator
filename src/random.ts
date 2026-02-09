@@ -42,7 +42,6 @@ export const createDeterministicRandomBytes = async (
   let counter = 0n;
   const counterBytes = new Uint8Array(8);
   const counterView = new DataView(counterBytes.buffer);
-  counterView.setBigUint64(0, counter, false);
   const deterministicRandomBytes: RandomBytes = async (length: number) => {
     if (!Number.isFinite(length) || length < 0) {
       throw new RangeError("length must be a non-negative finite number");
