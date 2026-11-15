@@ -1,6 +1,6 @@
 {
   "name": "password-generator",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Memorable password generator for Node and browsers (async WebCrypto).",
   "author": "Bermi Ferrer <bermi@bermilabs.com>",
   "license": "MIT",

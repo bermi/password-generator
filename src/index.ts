@@ -38,10 +38,12 @@ const MIN_MEMORABLE_LENGTH = (() => {
 })();
 
 const buildValidChars = (pattern: RegExp) => {
+  // g/y flags make test() stateful via lastIndex, skipping every other match
+  const re = new RegExp(pattern.source, pattern.flags.replace(/[gy]/g, ""));
   const chars: string[] = [];
   for (let i = 33; i <= 126; i += 1) {
     const char = String.fromCharCode(i);
-    if (pattern.test(char)) {
+    if (re.test(char)) {
       chars.push(char);
     }
   }

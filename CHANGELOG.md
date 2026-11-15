@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.1 - 2026-11-15
+
+### Fixes
+
+- Patterns with the `g` or `y` flag no longer drop every other matching character (#50).
+
 ## 3.0.0 - 2026-02-07
 
 ### Breaking Changes

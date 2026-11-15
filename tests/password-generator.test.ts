@@ -47,6 +47,22 @@ describe("Password generator", () => {
     expect(pass).toMatch(/^\d{5}$/);
   });
 
+  it("uses every matching character for global and sticky patterns", async () => {
+    for (const pattern of [/\d/g, /\d/y]) {
+      const seen = new Set<string>();
+      for (let i = 0; i < 50; i += 1) {
+        const pass = await generatePasswordWithOptions({
+          length: 20,
+          pattern,
+          ignoreSecurityRecommendations: true,
+        });
+        for (const ch of pass) seen.add(ch);
+      }
+      expect([...seen].sort().join("")).toBe("0123456789");
+      expect(pattern.lastIndex).toBe(0);
+    }
+  });
+
   it("generates passwords with a given prefix", async () => {
     const pass = await generatePasswordWithOptions({
       length: 7,
